@@ -57,7 +57,7 @@ COPY docker/mail.php /var/www/html/app/config/production/mail.php
 RUN cp -n /var/www/html/app/config/production/app.example.php /var/www/html/app/config/production/app.php
 
 # Change default hostname to blank...I guess?
-RUN sed -i s%http://staging.yourserver.com%% /var/www/html/app/config/production/app.php
+RUN sed -i s%http://production.yourserver.com%% /var/www/html/app/config/production/app.php
 
 # turn off the toolbar
 RUN sed -i 's%\x27debug\x27 => true%\x27debug\x27 => false%' /var/www/html/app/config/production/app.php
@@ -70,7 +70,7 @@ RUN chown -R docker /var/www/html
 RUN cd /tmp;curl -sS https://getcomposer.org/installer | php;mv /tmp/composer.phar /usr/local/bin/composer
 
 # Get dependencies
-RUN cd /var/www/html;composer install
+RUN cd /var/www/html;composer update;composer install
 
 ############### APPLICATION INSTALL/INIT #################
 
